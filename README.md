@@ -60,7 +60,7 @@
    ```
 (Use the bastion host to SSH into instances within the private subnet)
    ```
-   ssh -i your-key.pem ec2-user@<web_private_IP>
+   ssh -i your-key.pem ec2-user@<db_private_IP>
    ```
 2. Install PostgreSQL.
    ```
