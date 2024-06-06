@@ -5,7 +5,7 @@
 This documentation provides step-by-step instructions for setting up a secure, isolated private network on AWS using VPC, provisioning remote machines (EC2 instances), configuring a web application and a PostgreSQL database, and automating the setup with Terraform.
 
 ### Prerequisites:
-1. AWS account with appropriate permissions to create VPC, subnets, security groups, and EC2 instances.
+1. AWS account.
 2. Terraform installed on your local machine.
 
 ### Step 1: Set Up a Private Network Using AWS VPC
@@ -29,6 +29,11 @@ This documentation provides step-by-step instructions for setting up a secure, i
 1. SSH into the web application EC2 instance using the bastion host.
    ```
    ssh -i your-key.pem ec2-user@<PUBLIC_IP>
+   git clone https://github.com/FuzailN/engagedly.git
+   cd terraform
+   terraform init
+   terraform plan
+   terraform apply
    ```
 (Use the bastion host to SSH into instances within the private subnet)
    ```
@@ -92,7 +97,7 @@ create db and user:
    ```
 
 **Open a browser and navigate to the web application instance's public IP.**
-open the browser: http://10.1.0.4 
+open the browser: http://10.1.0.4  
 
 ### Step 4: Application Load Balancer (ALB) and DNS
 1. Create an ALB in the VPC.
@@ -103,7 +108,3 @@ open the browser: http://10.1.0.4
 
 ### Step 5: Secure Communication
 1. Create security groups to allow only necessary traffic (e.g., HTTP, HTTPS, PostgreSQL, Flask application port) between the instances.
-
-### Step 6: Automate the Setup with Terraform
-1. Run terraform init
-2. Run terraform apply
