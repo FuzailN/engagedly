@@ -1,0 +1,3 @@
+CREATE DATABASE yourdatabase;
+CREATE USER fuzail WITH ENCRYPTED PASSWORD 'fuzail';
+GRANT ALL PRIVILEGES ON DATABASE yourdatabase TO fuzail;
