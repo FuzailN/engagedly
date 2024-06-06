@@ -97,7 +97,9 @@ open the browser: http://10.1.0.4
 ### Step 4: Application Load Balancer (ALB) and DNS
 1. Create an ALB in the VPC.
 2. Configure the ALB to route traffic to the web application instance.
-3. Set up a DNS record for your application pointing to the ALB.
+(Select the web application instance and add it to the target group).
+3. Get the DNS Name: Copy the DNS name of your ALB (web-alb-1234567890.us-east-1.elb.amazonaws.com).
+4. You should see the response from your Flask web application.
 
 ### Step 5: Secure Communication
 1. Create security groups to allow only necessary traffic (e.g., HTTP, HTTPS, PostgreSQL, Flask application port) between the instances.
