@@ -43,7 +43,7 @@ This documentation provides step-by-step instructions for setting up a secure, i
    python3 -m venv venv
    source venv/bin/activate
    pip install Flask psycopg2-binary
-   vi app.py (find following code in engagedly repositories)
+   vi app.py (find following code in my github engagedly repositories)
    ```
 5. Deploy your web application.
    ```
