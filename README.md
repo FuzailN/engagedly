@@ -14,7 +14,7 @@ This documentation provides step-by-step instructions for setting up a secure, i
 2. Set the IPv4 CIDR block (e.g., 10.0.0.0/16), and leave other options as default.
 
 #### Create Subnets
-1. Select the VPC created earlier, provide a name, set the Availability Zone, and define the IPv4 CIDR block for the subnet (public-1, private-2) (10.0.1.0/24, 10.0.3.0/24, 10.0.3.0/24).
+1. Select the VPC created earlier, provide a name, set the Availability Zone, and define the IPv4 CIDR block for the public and private subnet (10.0.1.0/24, 10.0.3.0/24).
 
 #### Configure Routing Tables
 1. Provided internet gateway to public route table.
