@@ -1,8 +1,6 @@
 # Flask App with PostgreSQL Setup
 
-## Documentation for Setting Up a Private Network with AWS VPC, EC2 Instances, and Terraform
-
-This documentation provides step-by-step instructions for setting up a secure, isolated private network on AWS using VPC, provisioning remote machines (EC2 instances), configuring a web application and a PostgreSQL database, and automating the setup with Terraform.
+## Documentation for Setting Up a Private Network with AWS VPC, EC2 Instances using Terraform
 
 ### Prerequisites:
 1. AWS account.
