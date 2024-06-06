@@ -59,7 +59,6 @@ resource "aws_security_group" "db_sg" {
 
 resource "aws_security_group" "bastion_sg" {
   vpc_id = aws_vpc.engagedly_vpc.id
-  description = "Allow SSH access"
 
   ingress {
     from_port   = 22
