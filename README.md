@@ -14,10 +14,10 @@ This documentation provides step-by-step instructions for setting up a secure, i
 2. Set the IPv4 CIDR block (e.g., 10.0.0.0/16), and leave other options as default.
 
 #### Create Subnets
-1. Select the VPC created earlier, provide a name, set the Availability Zone, and define the IPv4 CIDR block for the subnet (10.0.1.0/24, 10.0.3.0/24, 10.0.3.0/24).
+1. Select the VPC created earlier, provide a name, set the Availability Zone, and define the IPv4 CIDR block for the subnet (public-1, private-2) (10.0.1.0/24, 10.0.3.0/24, 10.0.3.0/24).
 
 #### Configure Routing Tables
-1. Provided internet gateway to bastion_public_rt
+1. Provided internet gateway to public route table.
 
 ### Step 2: Provision Remote Machines
 1. Launch two EC2 instances within the VPC - One instance for a web application (Python Flask) & One instance for a PostgreSQL database.
@@ -27,19 +27,72 @@ This documentation provides step-by-step instructions for setting up a secure, i
 ### Step 3: Application and Database Configuration
 #### Install and Configure Web Application
 1. SSH into the web application EC2 instance using the bastion host.
+   ```
+   ssh -i your-key.pem ec2-user@<PUBLIC_IP>
+   ```
 (Use the bastion host to SSH into instances within the private subnet)
-2. Install necessary packages and dependencies for your web application (Python Flask).
-3. Deploy your web application.
+   ```
+   ssh -i your-key.pem ec2-user@<web_private_IP>
+   ```
+3. Install necessary packages and dependencies for your web application (Python Flask).
+   ```
+   sudo yum update -y
+   sudo yum install -y python3 python3-pip git
+   mkdir flask_app
+   cd flask_app
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install Flask psycopg2-binary
+   vi app.py (find following code in engagedly repositories)
+   ```
+5. Deploy your web application.
+   ```
+   sudo nohup python3 app.py &
+   ```
 
 #### Install and Configure PostgreSQL
 1. SSH into the PostgreSQL EC2 instance using the bastion host.
+    ```
+   ssh -i your-key.pem ec2-user@<PUBLIC_IP>
+   ```
 (Use the bastion host to SSH into instances within the private subnet)
+   ```
+   ssh -i your-key.pem ec2-user@<web_private_IP>
+   ```
 2. Install PostgreSQL.
-3. Configure PostgreSQL to accept connections from the web application instance.
-4. Create necessary databases and users.
+   ```
+   sudo yum update -y
+   sudo amazon-linux-extras install postgresql11 -y 
+   sudo yum install -y postgresql-server postgresql-devel postgresql-contrib
+   sudo service postgresql initdb
+   sudo service postgresql start
+   sudo su - postgres
+   psql
+   ```
+create db and user:
+  ```
+  CREATE DATABASE yourdatabase;
+  CREATE USER fuzail WITH ENCRYPTED PASSWORD 'fuzail';
+  GRANT ALL PRIVILEGES ON DATABASE yourdatabase TO fuzail;
+  exit the prompt: \q
+  ```
+3. Ensure the Web Application Can Connect to the PostgreSQL Database
+   ```
+   sudo nano /var/lib/pgsql/data/pg_hba.conf
+   (add below line)
+   host    all             all             <WEB_INSTANCE_PRIVATE_IP>/32          md5
+   :wq
+   ```
 
-#### Ensure Web Application Can Connect to PostgreSQL
-1. Update the web application configuration to connect to the PostgreSQL database using the internal IP address.
+   ```
+   sudo nano /var/lib/pgsql/data/postgresql.conf
+   listen_addresses = '*' (uncomment)
+   :wq
+   sudo service postgresql restart
+   ```
+
+**Open a browser and navigate to the web application instance's public IP.**
+open the browser: http://10.1.0.4 
 
 ### Step 4: Application Load Balancer (ALB) and DNS
 1. Create an ALB in the VPC.
